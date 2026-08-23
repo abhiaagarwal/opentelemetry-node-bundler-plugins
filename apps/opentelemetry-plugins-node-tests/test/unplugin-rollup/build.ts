@@ -15,6 +15,7 @@
  */
 
 import { rollup } from "rollup";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { openTelemetryPlugin } from "opentelemetry-unplugin-node";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import path from "path";

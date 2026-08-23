@@ -15,6 +15,7 @@
  */
 
 import { build } from "esbuild";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { openTelemetryPlugin } from "opentelemetry-esbuild-plugin-node";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import path from "path";

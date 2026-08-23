@@ -1,4 +1,5 @@
 import path from "path";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { OpenTelemetryWebpackPlugin } from "opentelemetry-webpack-plugin-node";
 
 import webpack from "webpack";
