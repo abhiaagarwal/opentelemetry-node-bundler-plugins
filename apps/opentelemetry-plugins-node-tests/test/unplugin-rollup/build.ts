@@ -17,7 +17,7 @@
 import { rollup } from "rollup";
 import { openTelemetryPlugin } from "opentelemetry-unplugin-node";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
-import { fileURLToPath } from "url";
+import path from "path";
 import typescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import nodeResolve from "@rollup/plugin-node-resolve";
@@ -25,7 +25,7 @@ import json from "@rollup/plugin-json";
 
 async function build() {
   const bundle = await rollup({
-    input: fileURLToPath(new URL("../test-app/app.ts", import.meta.url)),
+    input: path.join(import.meta.dirname, "../test-app/app.ts"),
     plugins: [
       nodeResolve({ extensions: [".mjs", ".js", ".json", ".ts"] }),
       openTelemetryPlugin.rollup({
@@ -47,15 +47,16 @@ async function build() {
       commonjs(),
       json(),
       typescript({
-        tsconfig: fileURLToPath(new URL("../../tsconfig.json", import.meta.url)),
+        tsconfig: path.join(import.meta.dirname, "../../tsconfig.json"),
         sourceMap: false,
       }),
     ],
   });
 
   await bundle.write({
-    file: fileURLToPath(
-      new URL("../../test-dist/unplugin-rollup/app.cjs", import.meta.url)
+    file: path.join(
+      import.meta.dirname,
+      "../../test-dist/unplugin-rollup/app.cjs",
     ),
     format: "cjs",
   });

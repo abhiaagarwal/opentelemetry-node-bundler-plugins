@@ -20,12 +20,12 @@ import * as assert from "assert";
 import { exec as execCb, spawnSync } from "child_process";
 import { rm } from "fs/promises";
 import { describe, before, after, it } from "node:test";
-import { fileURLToPath } from "url";
+import path from "path";
 
 import { promisify } from "util";
 
 const exec = promisify(execCb);
-const testDirectory = fileURLToPath(new URL(".", import.meta.url));
+const testDirectory = import.meta.dirname;
 
 function startTestApp(bundler: string) {
   return spawnSync(
@@ -128,9 +128,7 @@ function getTrace(stdOutLines: string[], spanName: string) {
           // Using fastify in the test server so enable it
           "fastify",
         ];
-        const buildScript = fileURLToPath(
-          new URL(`${bundler}/${scriptFile}`, import.meta.url)
-        );
+        const buildScript = path.join(testDirectory, bundler, scriptFile);
         await exec(
           `OTEL_NODE_ENABLED_INSTRUMENTATIONS=${enabledInstrumentations.join(",")} tsx ${buildScript}`
         );
@@ -155,11 +153,7 @@ function getTrace(stdOutLines: string[], spanName: string) {
 
       after(async () => {
         for (const distFile of distFiles) {
-          await rm(
-            fileURLToPath(
-              new URL(`../test-dist/${bundler}/${distFile}`, import.meta.url)
-            )
-          );
+          await rm(path.join(testDirectory, "../test-dist", bundler, distFile));
         }
       });
 

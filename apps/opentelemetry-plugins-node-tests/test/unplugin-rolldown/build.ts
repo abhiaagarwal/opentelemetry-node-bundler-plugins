@@ -17,11 +17,11 @@
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import { rolldown } from "rolldown";
 import { openTelemetryPlugin } from "opentelemetry-unplugin-node";
-import { fileURLToPath } from "url";
+import path from "path";
 
 async function build() {
   const bundle = await rolldown({
-    input: fileURLToPath(new URL("../test-app/app.ts", import.meta.url)),
+    input: path.join(import.meta.dirname, "../test-app/app.ts"),
     platform: "node",
     plugins: [
       openTelemetryPlugin.rolldown({
@@ -44,8 +44,9 @@ async function build() {
   });
 
   await bundle.write({
-    file: fileURLToPath(
-      new URL("../../test-dist/unplugin-rolldown/app.cjs", import.meta.url)
+    file: path.join(
+      import.meta.dirname,
+      "../../test-dist/unplugin-rolldown/app.cjs",
     ),
     format: "cjs",
   });
