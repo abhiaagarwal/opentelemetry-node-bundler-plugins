@@ -15,7 +15,7 @@
         ],
         "options": {
           "cwd": "apps/opentelemetry-plugins-node-tests",
-          "command": "nyc tsx --test 'test/**/*.test.ts'",
+          "command": "nyc tsx --test 'test/**/*.test.ts' 'test/**/*.test.cjs'",
           "outputPath": "packages/opentelemetry-plugins-node-tests/test-dist"
         }
       },
