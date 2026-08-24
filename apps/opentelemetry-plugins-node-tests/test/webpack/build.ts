@@ -1,4 +1,4 @@
-import { fileURLToPath } from "url";
+import path from "path";
 import { OpenTelemetryWebpackPlugin } from "opentelemetry-webpack-plugin-node";
 
 import webpack from "webpack";
@@ -10,9 +10,9 @@ webpack(
     target: "node",
     mode: "production",
     devtool: "source-map",
-    entry: fileURLToPath(new URL("../test-app/app.ts", import.meta.url)),
+    entry: path.join(import.meta.dirname, "../test-app/app.ts"),
     output: {
-      path: fileURLToPath(new URL("../../test-dist/webpack", import.meta.url)),
+      path: path.join(import.meta.dirname, "../../test-dist/webpack"),
       filename: "app.cjs",
     },
     optimization: {
