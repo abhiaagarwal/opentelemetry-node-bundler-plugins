@@ -94,6 +94,11 @@ function getTrace(stdOutLines: string[], spanName: string) {
     distFiles: ["app.cjs"],
   },
   {
+    scriptFile: "build.cjs",
+    bundler: "esbuild-cjs",
+    distFiles: ["app.cjs"],
+  },
+  {
     scriptFile: "build.ts",
     bundler: "webpack",
     distFiles: ["app.cjs", "app.cjs.LICENSE.txt"],
