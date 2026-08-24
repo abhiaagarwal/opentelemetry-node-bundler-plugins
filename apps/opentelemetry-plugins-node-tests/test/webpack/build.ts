@@ -34,7 +34,7 @@ webpack(
           use: {
             loader: "ts-loader",
             options: {
-              transpileOnly: true,
+              configFile: path.join(import.meta.dirname, "../../tsconfig.webpack.json")
             },
           },
           exclude: /node_modules/,
