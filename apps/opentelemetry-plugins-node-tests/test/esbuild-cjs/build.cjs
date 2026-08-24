@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { build } from "esbuild";
+const path = require("path");
+const { build } = require("esbuild");
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { openTelemetryPlugin } from "opentelemetry-esbuild-plugin-node";
-import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
-import path from "path";
+const { openTelemetryPlugin } = require("opentelemetry-esbuild-plugin-node");
+const { getNodeAutoInstrumentations } = require("@opentelemetry/auto-instrumentations-node");
 
 build({
-  entryPoints: [path.join(import.meta.dirname, "../test-app/app.ts")],
+  entryPoints: [path.join(__dirname, "../test-app/app.ts")],
   bundle: true,
-  outfile: "test-dist/esbuild/app.cjs",
+  outfile: "test-dist/esbuild-cjs/app.cjs",
   target: "node20",
   platform: "node",
   plugins: [

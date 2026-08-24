@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "baseUrl": ".",
+    "paths": {
+      "opentelemetry-node-bundler-plugin-utils": [
+        "packages/opentelemetry-bundler-utils/src/index.ts"
+      ]
+    }
+  },
+  "include": ["packages/*/src/**/*.ts"]
+}

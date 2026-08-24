@@ -15,17 +15,14 @@
  */
 
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
+import { rolldown } from "rolldown";
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { openTelemetryPlugin } from "opentelemetry-unplugin-node";
 import path from "path";
 
 async function build() {
-  // Needed since ts-node is running in CJS mode 
-  const [{ rolldown }, { openTelemetryPlugin }] = await Promise.all([
-    import("rolldown"),
-    import("opentelemetry-unplugin-node"),
-  ]);
-
   const bundle = await rolldown({
-    input: path.normalize(`${__dirname}/../test-app/app.ts`),
+    input: path.join(import.meta.dirname, "../test-app/app.ts"),
     platform: "node",
     plugins: [
       openTelemetryPlugin.rolldown({
@@ -48,7 +45,10 @@ async function build() {
   });
 
   await bundle.write({
-    file: path.normalize(`${__dirname}/../../test-dist/unplugin-rolldown/app.js`),
+    file: path.join(
+      import.meta.dirname,
+      "../../test-dist/unplugin-rolldown/app.cjs",
+    ),
     format: "cjs",
   });
 

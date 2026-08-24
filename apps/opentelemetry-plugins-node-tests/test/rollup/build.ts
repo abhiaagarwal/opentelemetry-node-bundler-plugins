@@ -15,6 +15,7 @@
  */
 
 import { rollup } from "rollup";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { openTelemetryPlugin } from "opentelemetry-rollup-plugin-node";
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
 import path from "path";
@@ -25,7 +26,7 @@ import json from "@rollup/plugin-json";
 
 async function build() {
   const bundle = await rollup({
-    input: path.normalize(`${__dirname}/../test-app/app.ts`),
+    input: path.join(import.meta.dirname, "../test-app/app.ts"),
     plugins: [
       nodeResolve({ extensions: [".mjs", ".js", ".json", ".ts"] }),
       openTelemetryPlugin({
@@ -47,14 +48,14 @@ async function build() {
       commonjs(),
       json(),
       typescript({
-        tsconfig: path.normalize(`${__dirname}/../../tsconfig.json`),
+        tsconfig: path.join(import.meta.dirname, "../../tsconfig.json"),
         sourceMap: false,
       }),
     ],
   });
 
   await bundle.write({
-    file: path.normalize(`${__dirname}/../../test-dist/rollup/app.js`),
+    file: path.join(import.meta.dirname, "../../test-dist/rollup/app.cjs"),
     format: "cjs",
   });
 
